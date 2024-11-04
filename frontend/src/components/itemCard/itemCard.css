@@ -1,0 +1,23 @@
+.card {
+  width: 450px;
+  height: 450px;
+  background-color: rgb(197, 40, 40);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.img__container {
+  width: 100%;
+  height: 300px;
+  margin-bottom: 30px;
+}
+
+.img__container img {
+  border-radius: 15px;
+  width: 400px;
+  height: 300px;
+}
+
+.card p {
+  margin: 20px 0;
+}
