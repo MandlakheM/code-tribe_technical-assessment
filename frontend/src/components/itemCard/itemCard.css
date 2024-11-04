@@ -16,6 +16,7 @@
   border-radius: 15px;
   width: 400px;
   height: 300px;
+  cursor: pointer;
 }
 
 .card p {

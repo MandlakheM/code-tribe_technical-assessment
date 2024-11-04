@@ -1,48 +1,58 @@
-import React from "react";
+import { useState } from "react";
 import "./nav.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import SignIn from "../../pages/auth/Signin";
+import SignUp from "../../pages/auth/Signup";
+import AccountMenu from "../account menu/accountMenu";
 
 function Nav() {
+  const [signUpModal, setSignUpModal] = useState(false);
+  const [signInModal, setSignInModal] = useState(false);
+
+  function deactivate() {
+    setSignInModal(false);
+    setSignUpModal(false);
+  }
   return (
     <header className="header__container gutter">
       <div className="logo">
         <h1>sell a lot</h1>
       </div>
       <div className="search">
-        <div class="dropdown">
-          <button class="dropbtn">
+        <div className="dropdown">
+          <button className="dropbtn">
             Category <RiArrowDropDownLine />
           </button>
-          <div class="dropdown-content">
-            <div class="header">
+          <div className="dropdown-content">
+            <div className="header">
               <h2>Shop by category</h2>
             </div>
-            <div class="row">
-              <div class="column">
+            <div className="row">
+              <div className="column">
                 <h3>Electronics</h3>
               </div>
-              <div class="column">
+              <div className="column">
                 <h3>Fashion</h3>
               </div>
-              <div class="column">
+              <div className="column">
                 <h3>Home</h3>
               </div>
-              <div class="column">
+              <div className="column">
                 <h3>Cars</h3>
               </div>
-              <div class="column">
+              <div className="column">
                 <h3>Games</h3>
               </div>
-              <div class="column">
+              <div className="column">
                 <h3>Musical Instruments</h3>
               </div>
-              <div class="column">
+              <div className="column">
                 <h3>Toys</h3>
               </div>
-              <div class="column">
+              <div className="column">
                 <h3>Sports</h3>
               </div>
-              <div class="column">
+              <div className="column">
                 <h3>Property</h3>
               </div>
             </div>
@@ -70,9 +80,12 @@ function Nav() {
         </div>
       </div>
       <div className="auth">
-        <button>log in</button>
-        <button>sign in</button>
+        <button onClick={() => setSignInModal(!signInModal)}>log in</button>
+        <button onClick={() => setSignUpModal(!signUpModal)}>sign up</button>
       </div>
+      <AccountMenu />
+      {signInModal && <SignIn deactivate={deactivate} />}
+      {signUpModal && <SignUp deactivate={deactivate} />}
     </header>
   );
 }

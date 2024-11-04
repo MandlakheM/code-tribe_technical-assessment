@@ -1,0 +1,44 @@
+.info__container {
+  width: 100vw;
+  height: 85vh;
+  display: flex;
+}
+
+.item__image {
+  width: 70%;
+  background-color: aquamarine;
+  height: 100%;
+}
+
+.item__image img {
+  width: 100%;
+}
+
+.item__info {
+  width: 20%;
+  padding: 20px;
+}
+
+.item__info__boldtext {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+.action__buttons {
+  margin: 10px 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* background-color: aqua; */
+}
+
+.item__description{
+    margin: 10px 0;
+}
+
+.map__container{
+    width: 100%;
+    height: 200px;
+}
