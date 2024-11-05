@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 import authRoutes from "./routes/authRoutes.js";
+import itemRoutes from "./routes/itemRoutes.js"
 
 const app = express();
 const PORT = 2001;
@@ -13,6 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use("/auth", authRoutes);
+app.use("/", itemRoutes);
+
 app.all("*", (req, res) => res.send("error 404 page not found"));
 
 app.listen(PORT, () =>
