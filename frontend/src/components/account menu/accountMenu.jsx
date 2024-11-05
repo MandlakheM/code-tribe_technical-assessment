@@ -11,13 +11,27 @@ import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
+import { useNavigate } from "react-router-dom";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const toggleNewItemMenu = () => {
+    navigate("/new-listing");
+    handleClose();
+  };
+
+  const toggleYourItemsMenu = () => {
+    navigate("/my-listing");
+    handleClose();
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -78,13 +92,13 @@ export default function AccountMenu() {
           <Avatar /> Profile
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleNewItemMenu}>
           <ListItemIcon>
             <PersonAdd fontSize="small" />
           </ListItemIcon>
-          Seller dashboard
+          Create new listing
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleYourItemsMenu}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
