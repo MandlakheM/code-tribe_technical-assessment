@@ -12,6 +12,10 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import { GoogleIcon, FacebookIcon } from "./CustomIcons";
 import "./auth.css";
+import { auth, provider } from "../../../firebaseConfig";
+import { signInWithPopup } from "firebase/auth";
+import { useDispatch } from "react-redux";
+
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
@@ -60,6 +64,9 @@ export default function SignIn({ deactivate }) {
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState("");
+
+  const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -70,15 +77,17 @@ export default function SignIn({ deactivate }) {
   };
 
   const handleSubmit = (event) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
-      return;
-    }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    // if (emailError || passwordError) {
+    event.preventDefault();
+    //   return;
+    // }
+    // const data = new FormData(event.currentTarget);
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
+    console.log(value);
+    // alert("clicked")
   };
 
   const validateInputs = () => {
@@ -108,6 +117,19 @@ export default function SignIn({ deactivate }) {
     return isValid;
   };
 
+  const googleOauth = async () => {
+    signInWithPopup(auth, provider).then((data) => {
+      // setValue(data.user);
+      const results = data.user;
+      const token = data.accessToken;
+      try {
+        dispatch({ type: "AUTH", data: { results, token } });
+      } catch (error) {
+        console.log("failed to sign in with google", error);
+      }
+    });
+  };
+
   return (
     <div className="overlay">
       <div className="modal" onClick={deactivate}></div>
@@ -123,7 +145,7 @@ export default function SignIn({ deactivate }) {
             </Typography>
             <Box
               component="form"
-              onSubmit={handleSubmit}
+              // onSubmit={handleSubmit}
               noValidate
               sx={{
                 display: "flex",
@@ -173,7 +195,8 @@ export default function SignIn({ deactivate }) {
                 type="submit"
                 fullWidth
                 variant="contained"
-                onClick={validateInputs}
+                // onClick={validateInputs}
+                onClick={handleSubmit}
               >
                 Sign in
               </Button>
@@ -195,7 +218,7 @@ export default function SignIn({ deactivate }) {
               <Button
                 fullWidth
                 variant="outlined"
-                onClick={() => alert("Sign in with Google")}
+                onClick={googleOauth}
                 startIcon={<GoogleIcon />}
               >
                 Sign in with Google

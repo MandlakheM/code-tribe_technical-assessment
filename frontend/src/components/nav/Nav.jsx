@@ -4,10 +4,12 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import SignIn from "../../pages/auth/Signin";
 import SignUp from "../../pages/auth/Signup";
 import AccountMenu from "../account menu/accountMenu";
-
+import { useNavigate } from "react-router-dom";
 function Nav() {
   const [signUpModal, setSignUpModal] = useState(false);
   const [signInModal, setSignInModal] = useState(false);
+
+const navigate = useNavigate()
 
   function deactivate() {
     setSignInModal(false);
@@ -16,7 +18,7 @@ function Nav() {
   return (
     <header className="header__container gutter">
       <div className="logo">
-        <h1>sell a lot</h1>
+        <h1 onClick={()=> navigate("/")}>sell a lot</h1>
       </div>
       <div className="search">
         <div className="dropdown">
