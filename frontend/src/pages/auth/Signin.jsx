@@ -15,6 +15,8 @@ import "./auth.css";
 import { auth, provider } from "../../../firebaseConfig";
 import { signInWithPopup } from "firebase/auth";
 import { useDispatch } from "react-redux";
+import { signin } from "../../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -67,6 +69,7 @@ export default function SignIn({ deactivate }) {
   const [value, setValue] = React.useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -76,18 +79,11 @@ export default function SignIn({ deactivate }) {
     setOpen(false);
   };
 
-  const handleSubmit = (event) => {
-    // if (emailError || passwordError) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    //   return;
-    // }
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
-    console.log(value);
-    // alert("clicked")
+    if (validateInputs()) {
+      dispatch(signin({ email: email.value, password: password.value }));
+    }
   };
 
   const validateInputs = () => {
@@ -118,17 +114,16 @@ export default function SignIn({ deactivate }) {
   };
 
   const googleOauth = async () => {
-    signInWithPopup(auth, provider).then((data) => {
-      // setValue(data.user);
-      const results = data.user;
-      const token = data.accessToken;
-      try {
-        dispatch({ type: "AUTH", data: { results, token } });
-      } catch (error) {
-        console.log("failed to sign in with google", error);
-      }
-    });
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const token = await result.user.getIdToken(); 
+      dispatch({ type: "AUTH", data: { results: result.user, token } });
+      navigate('/');
+    } catch (error) {
+      console.error("Failed to sign in with Google", error);
+    }
   };
+  
 
   return (
     <div className="overlay">

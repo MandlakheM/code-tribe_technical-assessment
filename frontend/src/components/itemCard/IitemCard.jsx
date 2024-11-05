@@ -13,7 +13,7 @@ function IitemCard({ item }) {
     <div className="card">
       <div className="img__container">
         <img
-          src={item.itemImg}
+          src={item.image}
           alt={item.itemName}
             onClick={itemClicked}
         />
